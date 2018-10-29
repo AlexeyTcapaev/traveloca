@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 54:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(55)
+var normalizeComponent = __webpack_require__(47)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(53)
 /* template */
-var __vue_template__ = __webpack_require__(56)
+var __vue_template__ = __webpack_require__(48)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48,7 +48,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 55:
+/***/ 47:
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -158,14 +158,105 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 56:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    1\n")])
+  return _c("div", [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.user.name,
+          expression: "user.name"
+        }
+      ],
+      attrs: { type: "text", placeholder: "name" },
+      domProps: { value: _vm.user.name },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.user, "name", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.user.email,
+          expression: "user.email"
+        }
+      ],
+      attrs: { type: "text", placeholder: "email" },
+      domProps: { value: _vm.user.email },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.user, "email", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.user.password,
+          expression: "user.password"
+        }
+      ],
+      attrs: { type: "password", placeholder: "password" },
+      domProps: { value: _vm.user.password },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.user, "password", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.user.password_confirmation,
+          expression: "user.password_confirmation"
+        }
+      ],
+      attrs: { type: "password", placeholder: "confrim password" },
+      domProps: { value: _vm.user.password_confirmation },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.user, "password_confirmation", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.Submit } }),
+    _vm._v(" "),
+    _c("h1", [_vm._v(_vm._s(_vm.alert))]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.GetUser } }, [_vm._v("get user")]),
+    _vm._v("\n    " + _vm._s(_vm.BDuser) + "\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -176,6 +267,68 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-91ac6b5c", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 53:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(40);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: {},
+      alert: {},
+      BDuser: {}
+    };
+  },
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({ SetToken: "token/SetToken" }), {
+    Submit: function Submit() {
+      var init = this;
+      axios.post("/api/auth/signup", {
+        email: this.user.email,
+        password: this.user.password,
+        name: this.user.name,
+        password_confirmation: this.user.password_confirmation
+      }).then(function (resp) {
+        init.alert = resp;
+        axios.post("/api/auth/login", {
+          email: init.user.email,
+          password: init.user.password,
+          remember_me: true
+        }).then(function (resp) {
+          init.SetToken(resp.data);
+          init.$router.push("/app");
+        });
+      });
+    },
+    GetUser: function GetUser() {
+      var init = this;
+      axios.get("/api/auth/user").then(function (resp) {
+        init.BDuser = resp.data;
+      });
+    }
+  }),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])("token", ["token"]))
+});
 
 /***/ })
 
